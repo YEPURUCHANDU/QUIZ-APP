@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://127.0.0.1:5500/home.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz App</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    h2 {
+        margin-bottom: 20px;
+    }
+    .question {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    .options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .option {
+        padding: 10px;
+        background-color: #dedef7;
+        cursor: pointer;
+    }
+    .option:hover {
+        background-color: #71c971;
+    }
+    #submit-btn {
+        padding: 10px 20px;
+        background-color: #fcfe80e7;
+        color: #9179f1;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Quiz App</h2>
+    <div class="question" id="question">HTML stands for?</div>
+    <div class="options" id="options"><div class="option">Hyper Text Markup Language</div><div class="option">Hyper Text Makeup Language</div><div class="option">Hyper Taking making Language</div><div class="option">none</div></div>
+    <button id="submit-btn">Submit</button>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: 'HTML stands for?',
+            options: ['Hyper Text Markup Language', 'Hyper Text Makeup Language', 'Hyper Taking making Language', 'none'],
+            correctAnswer: 'Hyper Text Markup Language'
+        },
+        {
+            question: 'What is meant by GitHub?',
+            options: ['A social networking platform for developers', 'A version control system for tracking changes in code', 'An online marketplace for buying and selling code', 'A virtual reality platform for collaborative coding'],
+            correctAnswer: 'A version control system for tracking changes in code'
+        },
+        {
+            question: 'Which is the largest organ in our body?',
+            options: ['Heart', 'Liver', 'Brain', 'Skin'],
+            correctAnswer: 'Skin'
+        }
+    ];
+
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const submitButton = document.getElementById('submit-btn');
+
+    let currentQuestionIndex = 0;
+
+    function loadQuestion() {
+        const currentQuestion = questions[currentQuestionIndex];
+        questionElement.textContent = currentQuestion.question;
+        optionsElement.innerHTML = '';
+        currentQuestion.options.forEach((option, index) => {
+            const optionDiv = document.createElement('div');
+            optionDiv.classList.add('option');
+            optionDiv.textContent = option;
+            optionDiv.addEventListener('click', () => selectOption(index));
+            optionsElement.appendChild(optionDiv);
+        });
+    }
+
+    function selectOption(optionIndex) {
+        const selectedOption = questions[currentQuestionIndex].options[optionIndex];
+        const correctAnswer = questions[currentQuestionIndex].correctAnswer;
+        if (selectedOption === correctAnswer) {
+            alert('Correct!');
+        } else {
+            alert('Incorrect!');
+        }
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion();
+        } else {
+            alert('Quiz Completed!');
+        }
+    }
+
+    loadQuestion();
+
+    submitButton.addEventListener('click', () => {
+        alert('Please select an option before submitting.');
+    });
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+</body></html>
